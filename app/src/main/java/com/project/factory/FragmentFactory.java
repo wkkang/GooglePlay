@@ -1,0 +1,80 @@
+package com.project.factory;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.util.SparseArrayCompat;
+import android.util.SparseArray;
+
+import com.project.base.BaseFragment;
+import com.project.fragment.AppFragment;
+import com.project.fragment.CategoryFragment;
+import com.project.fragment.GameFragment;
+import com.project.fragment.HomeFragment;
+import com.project.fragment.HotFragment;
+import com.project.fragment.RecommendFragment;
+import com.project.fragment.SubjectFragment;
+
+/**
+ * Created by 17895 on 2016/5/17.
+ */
+public class FragmentFactory {
+    /**
+
+     <string-array name="main_titles">
+     <item>首页</item>
+     <item>应用</item>
+     <item>游戏</item>
+     <item>专题</item>
+     <item>推荐</item>
+     <item>分类</item>
+     <item>排行</item>
+     </string-array>
+     */
+    public static final int					FRAGMENT_HOME		= 0;
+    public static final int					FRAGMENT_APP		= 1;
+    public static final int					FRAGMENT_GAME		= 2;
+    public static final int					FRAGMENT_SUBJECT	= 3;
+    public static final int					FRAGMENT_RECOMMEND	= 4;
+    public static final int					FRAGMENT_CATEGORY	= 5;
+    public static final int					FRAGMENT_HOT		= 6;
+
+    static SparseArrayCompat<BaseFragment> cachesFragment = new SparseArrayCompat<BaseFragment>();
+    public static BaseFragment getFragment(int position){
+        BaseFragment fragment = null;
+        // 如果缓存里面有对应的fragment,就直接取出返回
+        BaseFragment tmpFragment = cachesFragment.get(position);
+        if(tmpFragment!=null){
+            fragment = tmpFragment;
+            return fragment;
+
+        }
+        switch(position){
+            case FRAGMENT_HOME:
+                fragment =new HomeFragment();
+            break;
+            case FRAGMENT_APP:
+                fragment = new AppFragment();
+                break;
+            case FRAGMENT_GAME:// 游戏
+                fragment = new GameFragment();
+                break;
+            case FRAGMENT_SUBJECT:// 专题
+                fragment = new SubjectFragment();
+                break;
+            case FRAGMENT_RECOMMEND:// 推荐
+                fragment = new RecommendFragment();
+                break;
+            case FRAGMENT_CATEGORY:// 分类
+                fragment = new CategoryFragment();
+                break;
+            case FRAGMENT_HOT:// 排行
+                fragment = new HotFragment();
+                break;
+
+            default:
+                break;
+        }
+// 保存对应的fragment
+        cachesFragment.put(position, fragment);
+        return fragment;
+    }
+}
